@@ -1,4 +1,4 @@
-package Entity;
+package fr.cch.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
@@ -30,10 +30,23 @@ public class Formations {
     @OneToMany(mappedBy = "formation")
     private List<SessionFormation> sessionsFormation;
 
+    @OneToMany(mappedBy = "formations")
+    private List<FormationSousThemes> formationSousThemes;
+
     public Formations(String nom, int prix, String description) {
         this.nom = nom;
         this.prix = prix;
         this.description = description;
+    }
+
+    @Override
+    public String toString() {
+        return "Formations{" +
+                "idFormation=" + idFormation +
+                ", nom='" + nom + '\'' +
+                ", prix=" + prix +
+                ", description='" + description + '\'' +
+                '}';
     }
 
 }

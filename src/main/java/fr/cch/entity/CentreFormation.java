@@ -1,4 +1,4 @@
-package Entity;
+package fr.cch.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
@@ -30,6 +30,15 @@ public class CentreFormation {
     public CentreFormation(String nom, String adresse) {
         this.nom = nom;
         this.adresse = adresse;
+    }
+
+    @Override
+    public String toString() {
+        return "CentreFormation{" +
+                "idCentre=" + idCentre +
+                ", nom='" + nom + '\'' +
+                ", adresse='" + adresse + '\'' +
+                '}';
     }
 
 }

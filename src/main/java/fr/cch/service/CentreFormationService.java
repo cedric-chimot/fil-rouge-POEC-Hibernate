@@ -1,35 +1,35 @@
-package Entity;
+package fr.cch.service;
 
-import jakarta.persistence.*;
-import lombok.*;
+import fr.cch.entity.CentreFormation;
+import jakarta.persistence.EntityManagerFactory;
+import jakarta.persistence.Persistence;
+import org.hibernate.Session;
 
-import java.util.List;
+public class CentreFormationService {
 
-@Getter
-@Setter
-@RequiredArgsConstructor
-@AllArgsConstructor
-@Entity
-@Table(name = "centreFormation")
-public class CentreFormation {
+    /**
+     * L'EntityManagerFactory utilisé pour créer l'EntityManager.
+     */
+    private final EntityManagerFactory emf = Persistence.createEntityManagerFactory("filrouge-unit");
 
-    @Id
-    @GeneratedValue
-    @JoinColumn(name = "idCentre")
-    private Long idCentre;
+    /**
+     * La Session associée à l'EntityManager, utilisée pour les opérations sur la base de données.
+     */
+    Session session = emf.createEntityManager().unwrap(Session.class);
 
-    @Column(name = "nomCentre", nullable = false)
-    private String nom;
+    /**
+     * Créer un nouveau centre de formation dans la base de données.
+     *
+     * @param centreFormation, Les paramètres centre de formation à sauvegarder.
+     */
+    public void save (CentreFormation centreFormation) {
+        session.beginTransaction();
+        session.persist(centreFormation);
+        session.getTransaction().commit();
+    }
 
-    @Column(name = "adresse", nullable = false)
-    private String adresse;
-
-    @OneToMany(mappedBy = "centreFormation")
-    private List<SessionFormation> sessionsFormation;
-
-    public CentreFormation(String nom, String adresse) {
-        this.nom = nom;
-        this.adresse = adresse;
+    public CentreFormation findCentreFormation(Long id) {
+        return session.find(CentreFormation.class, id);
     }
 
 }

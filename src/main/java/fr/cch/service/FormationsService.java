@@ -1,6 +1,6 @@
-package Service;
+package fr.cch.service;
 
-import Entity.Formations;
+import fr.cch.entity.Formations;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
 import org.hibernate.Session;
@@ -12,25 +12,23 @@ public class FormationsService {
     private final EntityManagerFactory emf = Persistence.createEntityManagerFactory("filrouge-unit");
 
     /**
+     * La Session associée à l'EntityManager, utilisée pour les opérations sur la base de données.
+     */
+    Session session = emf.createEntityManager().unwrap(Session.class);
+
+    /**
      * Créer une nouvelle formation dans la base de données.
      *
-     * @param nom et + , La formation à sauvegarder.
+     * @param formation, La formation à sauvegarder.
      */
     public void save (Formations formation) {
-        Session session = null;
-        try {
-            session = emf.createEntityManager().unwrap(Session.class);
-            session.beginTransaction();
-            session.persist(formation);
-            session.getTransaction().commit();
-        } catch (Exception e) {
-            if(session != null && session.getTransaction().isActive()) {
-                session.getTransaction().rollback();
-            }
-        } finally {
-            if(session != null && session.isOpen()) {
-                session.close();
-            }
-        }
+        session.beginTransaction();
+        session.persist(formation);
+        session.getTransaction().commit();
     }
+
+    public Formations findFormation(Long id) {
+        return session.find(Formations.class, id);
+    }
+
 }
