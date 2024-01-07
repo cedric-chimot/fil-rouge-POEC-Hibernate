@@ -1,3 +1,3 @@
-Filrouge Hibernate POEC Java JEE
+__Filrouge Hibernate POEC Java JEE__
 
-Teste Hibernate sur un projet JAVA, méthodes Create et Read implémentée et envoi en BDD réglé
+__*Tests Hibernate sur un projet JAVA, méthodes Create et Read implémentée et envoi en BDD réglé*__
